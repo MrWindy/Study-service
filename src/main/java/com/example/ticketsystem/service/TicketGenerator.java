@@ -27,7 +27,7 @@ public class TicketGenerator {
                 contentStream.showText("Билет на мероприятие");
                 contentStream.endText();
 
-                // Информация о мероприятии
+
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA, 12);
                 contentStream.newLineAtOffset(100, 650);
@@ -42,7 +42,7 @@ public class TicketGenerator {
                 contentStream.showText("Владелец: " + userName);
                 contentStream.endText();
 
-                // QR-код (заглушка)
+
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA_OBLIQUE, 10);
                 contentStream.newLineAtOffset(100, 500);

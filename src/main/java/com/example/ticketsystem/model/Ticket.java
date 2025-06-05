@@ -21,7 +21,7 @@ public class Ticket {
     @JoinColumn(name = "user_id") // Явно укажите имя столбца
     private User user;
 
-    // Геттеры и сеттеры
+
     public Long getId() {
         return id;
     }

@@ -25,16 +25,16 @@ public class DataInitializer {
 
     @PostConstruct
     public void init() {
-        // Создание тестового пользователя
+
         if (userRepository.count() == 0) {
             User user = new User();
-            user.setName("Илья Петров");
+            user.setName("Захар Андрей");
             user.setEmail("test@example.com");
             user.setPassword(passwordEncoder.encode("password123"));
             userRepository.save(user);
         }
 
-        // Создание тестового мероприятия
+
         if (eventRepository.count() == 0) {
             Event event = new Event();
             event.setTitle("Концерт группы 'Кино'");

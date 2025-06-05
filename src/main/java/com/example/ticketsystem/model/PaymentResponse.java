@@ -5,7 +5,7 @@ public class PaymentResponse {
     private String transactionId;
     private String errorMessage;
 
-    // Конструкторы
+
     public PaymentResponse() {}
 
     public PaymentResponse(boolean success, String transactionId) {
@@ -19,7 +19,7 @@ public class PaymentResponse {
         this.errorMessage = errorMessage;
     }
 
-    // Геттеры и сеттеры
+
     public boolean isSuccess() {
         return success;
     }

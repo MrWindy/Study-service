@@ -8,7 +8,6 @@ public class PaymentRequest {
     private String expiryDate;
     private String cvv;
 
-    // Геттеры и сеттеры
     public Long getEventId() {
         return eventId;
     }

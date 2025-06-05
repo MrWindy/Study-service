@@ -19,7 +19,7 @@ public class Event {
     private int totalTickets;
     private int availableTickets;
 
-    // Геттеры и сеттеры
+
     public Long getId() {
         return id;
     }
