@@ -1,14 +1,19 @@
 package com.example.ticketsystem.controller;
 
+import com.example.ticketsystem.model.AuthResponse;
 import com.example.ticketsystem.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final AuthService authService;
+    private final AuthService authService;  // Добавляем зависимость
+
 
     @Autowired
     public AuthController(AuthService authService) {
@@ -16,26 +21,14 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@RequestParam String email,
-                           @RequestParam String password) {
-        return authService.registerUser(email, password);
+    public AuthResponse register(@RequestParam String email,
+                                 @RequestParam String password) {
+        return authService.registerUser(email, password);  // Вызываем метод экземпляра
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String email,
-                        @RequestParam String password) {
-        return authService.loginUser(email, password);
-    }
-
-    @PostMapping("/retry")
-    public String retry(@RequestParam String action,
-                        @RequestParam String email,
-                        @RequestParam String password) {
-        if ("register".equals(action)) {
-            return authService.registerUser(email, password);
-        } else if ("login".equals(action)) {
-            return authService.loginUser(email, password);
-        }
-        return "Недопустимое действие";
+    public AuthResponse login(@RequestParam String email,
+                              @RequestParam String password) {
+        return authService.loginUser(email, password);  // Вызываем метод экземпляра
     }
 }

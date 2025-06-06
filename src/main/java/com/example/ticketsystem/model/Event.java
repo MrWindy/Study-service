@@ -23,51 +23,21 @@ public class Event {
     public Long getId() {
         return id;
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getTitle() {
         return title;
     }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public LocalDateTime getDate() {
         return date;
     }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
     public String getLocation() {
         return location;
     }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public double getPrice() {
         return price;
     }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public int getTotalTickets() {
         return totalTickets;
     }
-
-    public void setTotalTickets(int totalTickets) {
-        this.totalTickets = totalTickets;
-    }
-
     public int getAvailableTickets() {
         return availableTickets;
     }
@@ -75,4 +45,23 @@ public class Event {
     public void setAvailableTickets(int availableTickets) {
         this.availableTickets = availableTickets;
     }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+    public void setLocation(String location) {
+        this.location = location;
+    }
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    public void setTotalTickets(int totalTickets) {
+        this.totalTickets = totalTickets;
+    }
+
 }

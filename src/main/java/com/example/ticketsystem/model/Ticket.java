@@ -25,19 +25,18 @@ public class Ticket {
     public Long getId() {
         return id;
     }
-
-    public void setId(Long id) {
-        this.id = id;
+    public User getUser() {
+        return user;
     }
-
+    public Event getEvent() {
+        return event;
+    }
+    public boolean isRedeemed() {
+        return redeemed;
+    }
     public String getTicketNumber() {
         return ticketNumber;
     }
-
-    public void setTicketNumber(String ticketNumber) {
-        this.ticketNumber = ticketNumber;
-    }
-
     public LocalDateTime getPurchaseTime() {
         return purchaseTime;
     }
@@ -45,27 +44,18 @@ public class Ticket {
     public void setPurchaseTime(LocalDateTime purchaseTime) {
         this.purchaseTime = purchaseTime;
     }
-
-    public boolean isRedeemed() {
-        return redeemed;
-    }
-
     public void setRedeemed(boolean redeemed) {
         this.redeemed = redeemed;
     }
-
-    public Event getEvent() {
-        return event;
+    public void setTicketNumber(String ticketNumber) {
+        this.ticketNumber = ticketNumber;
     }
-
     public void setEvent(Event event) {
         this.event = event;
     }
-
-    public User getUser() {
-        return user;
+    public void setId(Long id) {
+        this.id = id;
     }
-
     public void setUser(User user) {
         this.user = user;
     }

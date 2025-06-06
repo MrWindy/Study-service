@@ -1,9 +1,13 @@
 package com.example.ticketsystem.controller;
 
-import com.example.ticketsystem.model.*;
+import com.example.ticketsystem.model.Event;
+import com.example.ticketsystem.model.PaymentRequest;
+import com.example.ticketsystem.model.PaymentResponse;
 import com.example.ticketsystem.service.TicketService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,9 +35,20 @@ public class TicketController {
     }
 
     @PostMapping("/purchase")
-    public PaymentResponse purchaseTickets(
+    public ResponseEntity<?> purchaseTickets(
             @RequestBody PaymentRequest request,
-            @AuthenticationPrincipal User user) {
-        return ticketService.purchaseTickets(request, user.getId());
+            HttpServletRequest servletRequest) {
+
+        Long userId = (Long) servletRequest.getAttribute("userId");
+        if (userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Требуется авторизация");
+        }
+
+        try {
+            PaymentResponse response = ticketService.purchaseTickets(request, userId);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

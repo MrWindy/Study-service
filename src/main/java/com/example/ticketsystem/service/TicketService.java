@@ -43,15 +43,22 @@ public class TicketService {
 
     @Transactional
     public PaymentResponse purchaseTickets(PaymentRequest request, Long userId) {
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+
 
         Event event = eventRepository.findById(request.getEventId())
                 .orElseThrow(() -> new RuntimeException("Мероприятие не найдено"));
 
-        if (!checkTicketsAvailable(request.getEventId(), request.getTicketCount())) {
-            return new PaymentResponse(false, null, "Запрошенное количество билетов недоступно");
+
+        if (event.getAvailableTickets() < request.getTicketCount()) {
+            throw new RuntimeException("Доступно только " + event.getAvailableTickets() + " билетов");
         }
+
+
+        validatePaymentRequest(request);
+
 
         PaymentResponse paymentResponse = paymentGateway.processPayment(
                 request,
@@ -62,10 +69,23 @@ public class TicketService {
             return paymentResponse;
         }
 
+
         reserveTickets(event, request.getTicketCount(), user);
+
+
         emailService.sendTickets(user.getEmail(), event, request.getTicketCount(), user.getName());
 
         return paymentResponse;
+    }
+
+    private void validatePaymentRequest(PaymentRequest request) {
+        if (request.getCardNumber() == null || request.getCardNumber().length() != 16) {
+            throw new RuntimeException("Некорректный номер карты");
+        }
+        if (request.getCvv() == null || request.getCvv().length() != 3) {
+            throw new RuntimeException("Некорректный CVV");
+        }
+
     }
 
     private void reserveTickets(Event event, int count, User user) {

@@ -23,23 +23,19 @@ public class PaymentResponse {
     public boolean isSuccess() {
         return success;
     }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
     public String getTransactionId() {
         return transactionId;
+    }
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
     public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
     }
-
-    public String getErrorMessage() {
-        return errorMessage;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
-
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }

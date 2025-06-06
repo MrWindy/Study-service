@@ -11,27 +11,16 @@ public class PaymentRequest {
     public Long getEventId() {
         return eventId;
     }
-
-    public void setEventId(Long eventId) {
-        this.eventId = eventId;
-    }
-
-    public int getTicketCount() {
-        return ticketCount;
-    }
-
-    public void setTicketCount(int ticketCount) {
-        this.ticketCount = ticketCount;
-    }
-
+    public String getCvv() {return cvv;}
     public String getCardNumber() {
         return cardNumber;
     }
-
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
+    public int getTicketCount() {
+        return ticketCount;
     }
-
+    public String getExpiryDate() {
+        return expiryDate;
+    }
     public String getCardHolder() {
         return cardHolder;
     }
@@ -39,13 +28,18 @@ public class PaymentRequest {
     public void setCardHolder(String cardHolder) {
         this.cardHolder = cardHolder;
     }
-
-    public String getExpiryDate() {
-        return expiryDate;
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
-
     public void setExpiryDate(String expiryDate) {
         this.expiryDate = expiryDate;
     }
+    public void setTicketCount(int ticketCount) {
+        this.ticketCount = ticketCount;
+    }
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
+    }
+    public void setCvv(String cvv) { this.cvv = cvv; }
 }
 

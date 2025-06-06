@@ -1,11 +1,15 @@
 package com.example.ticketsystem.service;
 
+import com.example.ticketsystem.model.AuthResponse;
 import com.example.ticketsystem.model.User;
 import com.example.ticketsystem.repository.UserRepository;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.regex.Pattern;
 
 @Service
@@ -21,40 +25,50 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public String registerUser(String email, String password) {
+    public AuthResponse registerUser(String email, String password) {
+
         if (!isValidEmail(email)) {
-            return "Email некорректен";
+            return new AuthResponse("Некорректный email", null, null);
         }
-
         if (userRepository.existsByEmail(email)) {
-            return "Пользователь с таким Email уже зарегистрирован";
+            return new AuthResponse("Email уже зарегистрирован", null, null);
+        }
+        if (!isPasswordStrong(password)) {
+            return new AuthResponse("Пароль слишком слабый", null, null);
         }
 
-        if (!isPasswordStrong(password)) {
-            return "Пароль слишком легкий";
-        }
 
         User user = new User();
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
-        userRepository.save(user);
+        user = userRepository.save(user);
 
-        return "Регистрация успешна";
+
+        String token = generateAccessToken(user);
+        return new AuthResponse("Регистрация успешна", token, user.getId());
     }
 
-    public String loginUser(String email, String password) {
+    public AuthResponse loginUser(String email, String password) {
         User user = userRepository.findByEmail(email)
                 .orElse(null);
 
-        if (user == null) {
-            return "Пользователь не найден";
+        if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
+            return new AuthResponse("Неверные учетные данные", null, null);
         }
 
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            return "Неверный пароль";
-        }
 
-        return "Вход выполнен успешно";
+        String token = generateAccessToken(user);
+        return new AuthResponse("Вход выполнен", token, user.getId());
+    }
+
+    private String generateAccessToken(User user) {
+        return Jwts.builder()
+                .setSubject(user.getEmail())
+                .claim("userId", user.getId())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 24 часа
+                .signWith(SignatureAlgorithm.HS256, "secret-key")
+                .compact();
     }
 
     private boolean isValidEmail(String email) {

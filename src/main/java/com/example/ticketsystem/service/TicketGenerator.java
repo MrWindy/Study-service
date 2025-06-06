@@ -20,7 +20,7 @@ public class TicketGenerator {
             document.addPage(page);
 
             try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
-                // Заголовок
+
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA_BOLD, 18);
                 contentStream.newLineAtOffset(100, 700);

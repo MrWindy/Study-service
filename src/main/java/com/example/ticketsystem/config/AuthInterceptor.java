@@ -5,8 +5,8 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
@@ -18,13 +18,13 @@ public class AuthInterceptor implements HandlerInterceptor {
                              HttpServletResponse response,
                              Object handler) throws Exception {
 
-        // Пропускаем публичные эндпоинты
+
         if (request.getRequestURI().startsWith("/api/auth") ||
                 request.getRequestURI().startsWith("/api/tickets/events")) {
             return true;
         }
 
-        // Проверка токена
+
         String token = request.getHeader("Authorization");
         if (token == null || !token.startsWith("Bearer ")) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -38,7 +38,7 @@ public class AuthInterceptor implements HandlerInterceptor {
                     .parseClaimsJws(token)
                     .getBody();
 
-            // Извлекаем ID пользователя и добавляем в атрибуты запроса
+
             Long userId = claims.get("userId", Long.class);
             request.setAttribute("userId", userId);
 
